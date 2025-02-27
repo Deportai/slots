@@ -24,37 +24,45 @@ function getRandomSymbol() {
 // Update bet amount
 function changeBet(change) {
     if (isSpinning) return;
-    betAmount = Math.max(5, Math.min(50, betAmount + change)); // Min 5, Max 50
-    betAmountDisplay.textContent = `Bet: ${betAmount} Credits`;
-    spinButton.textContent = `Spin (${betAmount} Credits)`;
+    const newBet = betAmount + change;
+    if (newBet >= 5 && newBet <= 50) { // Ensure bet stays between 5 and 50
+        betAmount = newBet;
+        betAmountDisplay.textContent = `Bet: ${betAmount} Credits`;
+        spinButton.textContent = `Spin (${betAmount} Credits)`;
+    }
 }
 
-// Check win condition (payout based on bet)
+// Check win condition
 function checkWin(symbol1, symbol2, symbol3) {
     if (symbol1 === symbol2 && symbol2 === symbol3) {
-        return betAmount * 10; // 10x bet for jackpot
+        return betAmount * 10; // 10x bet payout
     }
     return 0;
 }
 
-// Realistic spin animation
+// Realistic spin animation for a single reel
 function spinReel(reel, duration, callback) {
-    let spins = 20; // Number of symbols to cycle through
-    let speed = 50; // Initial speed (ms)
-    const acceleration = 1.2; // Deceleration factor
+    const startTime = performance.now();
+    const initialSpeed = 50; // Fast initial speed (ms)
+    const deceleration = 0.05; // Controls slowdown rate
 
-    function update() {
+    function animate(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1); // 0 to 1
+        const easedProgress = 1 - Math.pow(1 - progress, 4); // Ease-out quartic
+        const speed = initialSpeed + (duration - initialSpeed) * easedProgress;
+
         reel.textContent = getRandomSymbol();
-        spins--;
-        speed *= acceleration; // Slow down over time
 
-        if (spins > 0) {
-            setTimeout(update, speed);
+        if (progress < 1) {
+            setTimeout(() => requestAnimationFrame(animate), speed / (1 + deceleration * elapsed));
         } else {
+            reel.textContent = getRandomSymbol(); // Final symbol
             callback();
         }
     }
-    update();
+
+    requestAnimationFrame(animate);
 }
 
 // Spin logic
@@ -100,9 +108,10 @@ function spin() {
         }
     };
 
-    spinReel(reel1, 2000, onReelComplete); // Reel 1 stops first
-    setTimeout(() => spinReel(reel2, 2500, onReelComplete), 300); // Reel 2 slightly delayed
-    setTimeout(() => spinReel(reel3, 3000, onReelComplete), 600); // Reel 3 last
+    // Sequential reel spins with realistic timing
+    spinReel(reel1, 1500, onReelComplete); // First reel: 1.5s
+    setTimeout(() => spinReel(reel2, 1800, onReelComplete), 300); // Second reel: 1.8s, delayed
+    setTimeout(() => spinReel(reel3, 2100, onReelComplete), 600); // Third reel: 2.1s, delayed
 }
 
 // Initial setup
@@ -111,5 +120,6 @@ spinButton.textContent = `Spin (${betAmount} Credits)`;
 
 // Telegram back button
 window.Telegram.WebApp.BackButton.onClick(() => {
-    window.Telegram.WebApp.close());
+    window.Telegram.WebApp.close();
+});
 window.Telegram.WebApp.BackButton.show();
