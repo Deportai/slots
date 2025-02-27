@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Crypto Casino Agency - Slots</title>
+    <title>CCA Slots</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,7 +14,7 @@
             --red: #ff3333;
             --neon-blue: #00ccff;
             --shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            --glow: 0 0 10px rgba(255, 215, 0, 0.6);
+            --glow: 0 0 8px rgba(255, 215, 0, 0.5);
         }
 
         * {
@@ -27,102 +27,86 @@
         body {
             background: var(--dark-bg);
             color: var(--white);
-            line-height: 1.4;
-            overflow-x: hidden;
-            font-size: 16px;
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            overflow: hidden;
+            font-size: 16px;
         }
 
         .container {
-            width: 100%;
-            padding: 10px;
-            text-align: center;
             flex-grow: 1;
+            padding: 10px;
             display: flex;
             flex-direction: column;
+            align-items: center;
             justify-content: center;
         }
 
         header h1 {
-            font-size: 2.5em;
+            font-size: 2.2em;
             color: var(--gold);
-            text-shadow: 0 0 10px var(--gold);
-            margin: 10px 0;
+            text-shadow: var(--glow);
             letter-spacing: 2px;
-        }
-
-        header p {
-            font-size: 1.2em;
-            color: var(--white);
-            opacity: 0.9;
+            margin-bottom: 5px;
         }
 
         .game-card {
             background: var(--card-bg);
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             box-shadow: var(--shadow);
             border: 2px solid var(--gold);
-            margin: 10px auto;
-            max-width: 100%;
-            width: 320px;
-        }
-
-        .game-card h3 {
-            font-size: 2em;
-            color: var(--white);
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px var(--neon-blue);
+            width: 100%;
+            max-width: 340px;
         }
 
         #slots-display {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            padding: 20px;
+            gap: 8px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.4);
             border: 2px solid var(--gold);
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
         }
 
         .slot-reel {
-            width: 80px;
-            height: 80px;
-            line-height: 80px;
-            font-size: 2.5em;
+            width: 90px;
+            height: 90px;
+            line-height: 90px;
+            font-size: 2.8em;
             background: var(--card-bg);
-            border-radius: 10px;
+            border-radius: 8px;
             text-align: center;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
             border: 2px solid var(--gold);
         }
 
         .slot-reel.spinning {
-            animation: spinReel 0.2s infinite linear;
+            animation: spinReel 0.15s infinite linear;
         }
 
         .game-controls {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
-            margin-top: 20px;
+            margin: 15px 0;
         }
 
         .game-controls button {
-            padding: 12px 30px;
+            padding: 10px 25px;
             background: var(--gold);
             color: var(--dark-bg);
             border: none;
-            border-radius: 10px;
-            cursor: pointer;
+            border-radius: 8px;
             font-size: 1em;
+            cursor: pointer;
             box-shadow: var(--glow);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
         }
 
         .game-controls button:hover,
@@ -132,40 +116,39 @@
         }
 
         .game-result {
-            font-size: 1.2em;
+            font-size: 1.1em;
             color: var(--white);
             text-align: center;
-            min-height: 40px;
-            margin-top: 15px;
-            text-shadow: 0 0 10px var(--neon-blue);
+            min-height: 30px;
+            text-shadow: 0 0 8px var(--neon-blue);
+            margin: 10px 0;
         }
 
         .game-score {
-            font-size: 1em;
+            font-size: 0.9em;
             color: var(--white);
             text-align: center;
-            margin-top: 10px;
         }
 
         footer {
-            padding: 10px;
+            padding: 8px;
             background: var(--card-bg);
             color: var(--white);
-            font-size: 0.9em;
+            font-size: 0.8em;
             text-align: center;
             border-top: 2px solid var(--gold);
         }
 
         @keyframes spinReel {
-            0% { transform: translateY(-300%) rotate(25deg); }
+            0% { transform: translateY(-200%) rotate(20deg); }
             100% { transform: translateY(0) rotate(0); }
         }
 
-        @media (max-width: 360px) {
-            .game-card { width: 280px; padding: 15px; }
-            .slot-reel { width: 70px; height: 70px; line-height: 70px; font-size: 2em; }
-            .game-controls button { padding: 10px 20px; font-size: 0.9em; }
-            header h1 { font-size: 2em; }
+        @media (max-width: 340px) {
+            .game-card { max-width: 280px; padding: 12px; }
+            .slot-reel { width: 75px; height: 75px; line-height: 75px; font-size: 2.2em; }
+            .game-controls button { padding: 8px 20px; font-size: 0.9em; }
+            header h1 { font-size: 1.8em; }
             .game-result { font-size: 1em; }
         }
     </style>
@@ -173,12 +156,9 @@
 <body>
     <div class="container">
         <header>
-            <h1>Crypto Casino Agency</h1>
-            <p>Spin to Win!</p>
+            <h1>CCA Slots</h1>
         </header>
-
         <div class="game-card">
-            <h3>Slots</h3>
             <div id="slots-display">
                 <div class="slot-reel"></div><div class="slot-reel"></div><div class="slot-reel"></div>
                 <div class="slot-reel"></div><div class="slot-reel"></div><div class="slot-reel"></div>
@@ -186,30 +166,29 @@
             </div>
             <div class="game-controls">
                 <button onclick="spinSlots()">Spin</button>
-                <button onclick="autoSpin()" id="auto-spin-btn">Auto Spin</button>
+                <button onclick="autoSpin()" id="auto-spin-btn">Auto</button>
             </div>
             <div class="game-result" id="slots-result"></div>
-            <div class="game-score" id="slots-score">Score: 0 | Jackpot: 0 $CCA</div>
+            <div class="game-score" id="slots-score">Score: 0 | Jackpot: 0</div>
         </div>
     </div>
-
     <footer>
         <p>© 2025 CCA - 18+ Only</p>
     </footer>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        // Telegram Web App Initialization
+        // Telegram Web App Setup
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
-        Telegram.WebApp.MainButton.hide(); // Hide default main button
+        Telegram.WebApp.MainButton.hide();
 
-        // Apply Telegram theme colors if available
+        // Theme Sync
         document.body.style.background = Telegram.WebApp.themeParams.bg_color || '#1a1a1a';
         document.body.style.color = Telegram.WebApp.themeParams.text_color || '#f0f0f0';
 
-        // Slots Game
-        const slotSymbols = ['🍒', '💎', '🔔', '7️⃣', '⭐', '🍋', '🍊', '🎰', '💰', '🍀', '🎁', '✨'];
+        // Game Logic
+        const slotSymbols = ['🍒', '💎', '🔔', '7', '⭐', '🍋', '🎰', '💰', '🎁', '✨'];
         let isSpinning = false;
         let autoSpinInterval = null;
         let score = 0;
@@ -223,50 +202,50 @@
             const reels = document.querySelectorAll('.slot-reel');
             const result = document.getElementById('slots-result');
             const scoreDisplay = document.getElementById('slots-score');
-            result.textContent = freeSpins > 0 ? `FREE SPINS: ${freeSpins}` : 'SPINNING...';
+            result.textContent = freeSpins > 0 ? `SPINS: ${freeSpins}` : 'SPINNING...';
             reels.forEach(reel => reel.classList.add('spinning'));
 
-            const spinDuration = 50; // Reduced for faster performance
+            const spinDuration = 40;
             for (let i = 0; i < spinDuration; i++) {
                 reels.forEach(reel => {
                     reel.textContent = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
                 });
-                await new Promise(resolve => setTimeout(resolve, 30));
+                await new Promise(resolve => setTimeout(resolve, 25));
             }
 
             const finalReels = Array.from({ length: 9 }, () => slotSymbols[Math.floor(Math.random() * slotSymbols.length)]);
             for (let i = 0; i < reels.length; i++) {
-                await new Promise(resolve => setTimeout(resolve, i * 200));
+                await new Promise(resolve => setTimeout(resolve, i * 150));
                 reels[i].textContent = finalReels[i];
-                reels[i].style.animation = 'spinReel 0.5s ease-out';
+                reels[i].style.animation = 'spinReel 0.4s ease-out';
                 reels[i].classList.remove('spinning');
             }
 
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 800));
             const bonusTriggered = checkBonus(finalReels);
             let win = checkWin(finalReels);
 
             if (bonusTriggered) {
                 freeSpins += 10;
-                result.textContent = 'BONUS SPINS! +10 FREE';
+                result.textContent = 'BONUS! +10 SPINS';
                 result.style.color = '#00ff00';
             } else if (win) {
                 let payout = calculatePayout(win);
                 if (freeSpins > 0) {
-                    multiplier = Math.random() < 0.3 ? (Math.random() < 0.5 ? 2 : Math.random() < 0.5 ? 3 : 5) : 1;
+                    multiplier = Math.random() < 0.25 ? (Math.random() < 0.5 ? 2 : 3) : 1;
                     payout *= multiplier;
                 }
                 score += payout;
                 jackpot += Math.floor(payout * 0.1);
-                result.textContent = `${win.message}! +${payout} $CCA${multiplier > 1 ? ` (x${multiplier})` : ''}`;
+                result.textContent = `${win.message}! +${payout}${multiplier > 1 ? ` (x${multiplier})` : ''}`;
                 result.style.color = '#ffd700';
-                if (score >= 10000) {
-                    result.textContent += ' | JACKPOT! +5000 $CCA';
-                    score += 5000;
+                if (score >= 5000) {
+                    result.textContent += ' | JACKPOT! +2500';
+                    score += 2500;
                     jackpot = 0;
                 }
             } else {
-                result.textContent = 'TRY AGAIN!';
+                result.textContent = 'NO WIN';
                 result.style.color = '#f0f0f0';
             }
 
@@ -276,11 +255,11 @@
                 result.textContent += ` | SPINS: ${freeSpins}`;
             }
 
-            scoreDisplay.textContent = `Score: ${score} | Jackpot: ${jackpot} $CCA${freeSpins > 0 ? ` | Spins: ${freeSpins}` : ''}`;
+            scoreDisplay.textContent = `Score: ${score} | Jackpot: ${jackpot}${freeSpins > 0 ? ` | Spins: ${freeSpins}` : ''}`;
             isSpinning = false;
 
             if (freeSpins > 0 && !autoSpinInterval) {
-                await new Promise(resolve => setTimeout(resolve, 1500));
+                await new Promise(resolve => setTimeout(resolve, 1200));
                 spinSlots();
             }
         }
@@ -290,10 +269,10 @@
             if (autoSpinInterval) {
                 clearInterval(autoSpinInterval);
                 autoSpinInterval = null;
-                btn.textContent = 'AUTO SPIN';
+                btn.textContent = 'AUTO';
             } else {
-                autoSpinInterval = setInterval(spinSlots, 3500);
-                btn.textContent = 'STOP AUTO';
+                autoSpinInterval = setInterval(spinSlots, 3000);
+                btn.textContent = 'STOP';
                 spinSlots();
             }
         }
@@ -307,13 +286,13 @@
 
             for (let row = 0; row < 3; row++) {
                 if (grid[row][0] === grid[row][1] && grid[row][1] === grid[row][2] && !['🎁', '✨'].includes(grid[row][0])) {
-                    return { message: `3 ${grid[row][0]} ROW`, type: 'row' };
+                    return { message: `3 ${grid[row][0]}`, type: 'row' };
                 }
             }
 
             for (let col = 0; col < 3; col++) {
                 if (grid[0][col] === grid[1][col] && grid[1][col] === grid[2][col] && !['🎁', '✨'].includes(grid[0][col])) {
-                    return { message: `3 ${grid[0][col]} COL`, type: 'column' };
+                    return { message: `3 ${grid[0][col]}`, type: 'column' };
                 }
             }
 
@@ -322,14 +301,6 @@
             }
             if (grid[0][2] === grid[1][1] && grid[1][1] === grid[2][0] && !['🎁', '✨'].includes(grid[0][2])) {
                 return { message: `3 ${grid[0][2]} DIAG`, type: 'diagonal' };
-            }
-
-            for (let i = 0; i < 9; i++) {
-                for (let j = i + 1; j < 9; j++) {
-                    if (reels[i] === reels[j] && !['🎁', '✨'].includes(reels[i])) {
-                        return { message: `2 ${reels[i]} MATCH`, type: 'pair' };
-                    }
-                }
             }
 
             return null;
@@ -341,10 +312,9 @@
 
         function calculatePayout(win) {
             switch (win.type) {
-                case 'row': return 1000;
-                case 'column': return 800;
-                case 'diagonal': return 1200;
-                case 'pair': return 200;
+                case 'row': return 500;
+                case 'column': return 400;
+                case 'diagonal': return 600;
                 default: return 0;
             }
         }
