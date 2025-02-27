@@ -1,6 +1,6 @@
 // Initialize Telegram Web App
 window.Telegram.WebApp.ready();
-window.Telegram.WebApp.expand(); // Expand to full screen
+window.Telegram.WebApp.expand();
 
 // Game variables
 const symbols = ['🌍', '⭐', '🚀', '🪐', '🌙'];
@@ -20,10 +20,10 @@ function getRandomSymbol() {
     return symbols[Math.floor(Math.random() * symbols.length)];
 }
 
-// Check for win condition (simple: all three match)
+// Check win condition
 function checkWin(symbol1, symbol2, symbol3) {
     if (symbol1 === symbol2 && symbol2 === symbol3) {
-        return 50; // Win payout (e.g., 50 credits)
+        return 50; // Jackpot
     }
     return 0; // No win
 }
@@ -33,7 +33,7 @@ function spin() {
     if (isSpinning || credits < spinCost) {
         if (credits < spinCost) {
             result.textContent = 'Not enough credits!';
-            window.Telegram.WebApp.showAlert('Not enough credits to spin!');
+            window.Telegram.WebApp.showAlert('Insufficient credits!');
         }
         return;
     }
@@ -44,7 +44,10 @@ function spin() {
     creditCount.textContent = credits;
     result.textContent = '';
 
-    let spins = 10; // Number of "frames" for animation
+    // Add spinning class for visual effect
+    [reel1, reel2, reel3].forEach(reel => reel.classList.add('spinning'));
+
+    let spins = 12; // Slightly longer animation
     const interval = setInterval(() => {
         reel1.textContent = getRandomSymbol();
         reel2.textContent = getRandomSymbol();
@@ -60,27 +63,30 @@ function spin() {
             reel2.textContent = final2;
             reel3.textContent = final3;
 
+            // Remove spinning effect
+            [reel1, reel2, reel3].forEach(reel => reel.classList.remove('spinning'));
+
             const winnings = checkWin(final1, final2, final3);
             if (winnings > 0) {
                 credits += winnings;
                 creditCount.textContent = credits;
-                result.textContent = `You won ${winnings} credits!`;
+                result.textContent = `Jackpot! +${winnings} Credits!`;
                 window.Telegram.WebApp.showPopup({
-                    title: 'Jackpot!',
+                    title: 'Big Win!',
                     message: `You won ${winnings} credits!`,
                     buttons: [{ type: 'ok' }]
                 });
             } else {
-                result.textContent = 'Try again!';
+                result.textContent = 'Spin Again!';
             }
 
             isSpinning = false;
             spinButton.disabled = false;
         }
-    }, 100); // Animation speed
+    }, 80); // Faster animation for a snappy feel
 }
 
-// Optional: Add a Telegram back button handler
+// Telegram back button
 window.Telegram.WebApp.BackButton.onClick(() => {
     window.Telegram.WebApp.close();
 });
