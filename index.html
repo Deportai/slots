@@ -2,322 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CCA Slots</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmo Reels - Slot Game</title>
     <style>
-        :root {
-            --gold: #ffd700;
-            --dark-bg: #1a1a1a;
-            --card-bg: #2a2a2a;
-            --white: #f0f0f0;
-            --red: #ff3333;
-            --neon-blue: #00ccff;
-            --shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            --glow: 0 0 8px rgba(255, 215, 0, 0.5);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Bebas Neue', sans-serif;
-        }
-
         body {
-            background: var(--dark-bg);
-            color: var(--white);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
-            font-size: 16px;
-        }
-
-        .container {
-            flex-grow: 1;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: #fff;
+            margin: 0;
             padding: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
         }
-
-        header h1 {
-            font-size: 2.2em;
-            color: var(--gold);
-            text-shadow: var(--glow);
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        .game-card {
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            border: 2px solid var(--gold);
-            width: 100%;
-            max-width: 340px;
-        }
-
-        #slots-display {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid var(--gold);
-            border-radius: 8px;
-        }
-
-        .slot-reel {
-            width: 90px;
-            height: 90px;
-            line-height: 90px;
-            font-size: 2.8em;
-            background: var(--card-bg);
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--gold);
-        }
-
-        .slot-reel.spinning {
-            animation: spinReel 0.15s infinite linear;
-        }
-
-        .game-controls {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 15px 0;
-        }
-
-        .game-controls button {
-            padding: 10px 25px;
-            background: var(--gold);
-            color: var(--dark-bg);
-            border: none;
-            border-radius: 8px;
-            font-size: 1em;
-            cursor: pointer;
-            box-shadow: var(--glow);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.2s ease;
-        }
-
-        .game-controls button:hover,
-        .game-controls button:active {
-            background: var(--red);
-            transform: scale(1.05);
-        }
-
-        .game-result {
-            font-size: 1.1em;
-            color: var(--white);
-            text-align: center;
-            min-height: 30px;
-            text-shadow: 0 0 8px var(--neon-blue);
+        h1 {
+            font-size: 24px;
             margin: 10px 0;
         }
-
-        .game-score {
-            font-size: 0.9em;
-            color: var(--white);
-            text-align: center;
+        #slot-machine {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
         }
-
-        footer {
-            padding: 8px;
-            background: var(--card-bg);
-            color: var(--white);
-            font-size: 0.8em;
-            text-align: center;
-            border-top: 2px solid var(--gold);
+        .reel {
+            width: 80px;
+            height: 80px;
+            background-color: #0f0f23;
+            border: 2px solid #ffd700;
+            margin: 0 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border-radius: 5px;
         }
-
-        @keyframes spinReel {
-            0% { transform: translateY(-200%) rotate(20deg); }
-            100% { transform: translateY(0) rotate(0); }
+        #spin-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ffd700;
+            color: #1a1a2e;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
-
-        @media (max-width: 340px) {
-            .game-card { max-width: 280px; padding: 12px; }
-            .slot-reel { width: 75px; height: 75px; line-height: 75px; font-size: 2.2em; }
-            .game-controls button { padding: 8px 20px; font-size: 0.9em; }
-            header h1 { font-size: 1.8em; }
-            .game-result { font-size: 1em; }
+        #spin-button:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+        #credits, #result {
+            font-size: 18px;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>CCA Slots</h1>
-        </header>
-        <div class="game-card">
-            <div id="slots-display">
-                <div class="slot-reel"></div><div class="slot-reel"></div><div class="slot-reel"></div>
-                <div class="slot-reel"></div><div class="slot-reel"></div><div class="slot-reel"></div>
-                <div class="slot-reel"></div><div class="slot-reel"></div><div class="slot-reel"></div>
-            </div>
-            <div class="game-controls">
-                <button onclick="spinSlots()">Spin</button>
-                <button onclick="autoSpin()" id="auto-spin-btn">Auto</button>
-            </div>
-            <div class="game-result" id="slots-result"></div>
-            <div class="game-score" id="slots-score">Score: 0 | Jackpot: 0</div>
-        </div>
+    <h1>Cosmo Reels</h1>
+    <div id="credits">Credits: <span id="credit-count">100</span></div>
+    <div id="slot-machine">
+        <div class="reel" id="reel1">?</div>
+        <div class="reel" id="reel2">?</div>
+        <div class="reel" id="reel3">?</div>
     </div>
-    <footer>
-        <p>© 2025 CCA - 18+ Only</p>
-    </footer>
+    <button id="spin-button" onclick="spin()">Spin (5 Credits)</button>
+    <div id="result"></div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        // Telegram Web App Setup
-        Telegram.WebApp.ready();
-        Telegram.WebApp.expand();
-        Telegram.WebApp.MainButton.hide();
-
-        // Theme Sync
-        document.body.style.background = Telegram.WebApp.themeParams.bg_color || '#1a1a1a';
-        document.body.style.color = Telegram.WebApp.themeParams.text_color || '#f0f0f0';
-
-        // Game Logic
-        const slotSymbols = ['🍒', '💎', '🔔', '7', '⭐', '🍋', '🎰', '💰', '🎁', '✨'];
-        let isSpinning = false;
-        let autoSpinInterval = null;
-        let score = 0;
-        let jackpot = 0;
-        let freeSpins = 0;
-        let multiplier = 1;
-
-        async function spinSlots() {
-            if (isSpinning) return;
-            isSpinning = true;
-            const reels = document.querySelectorAll('.slot-reel');
-            const result = document.getElementById('slots-result');
-            const scoreDisplay = document.getElementById('slots-score');
-            result.textContent = freeSpins > 0 ? `SPINS: ${freeSpins}` : 'SPINNING...';
-            reels.forEach(reel => reel.classList.add('spinning'));
-
-            const spinDuration = 40;
-            for (let i = 0; i < spinDuration; i++) {
-                reels.forEach(reel => {
-                    reel.textContent = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
-                });
-                await new Promise(resolve => setTimeout(resolve, 25));
-            }
-
-            const finalReels = Array.from({ length: 9 }, () => slotSymbols[Math.floor(Math.random() * slotSymbols.length)]);
-            for (let i = 0; i < reels.length; i++) {
-                await new Promise(resolve => setTimeout(resolve, i * 150));
-                reels[i].textContent = finalReels[i];
-                reels[i].style.animation = 'spinReel 0.4s ease-out';
-                reels[i].classList.remove('spinning');
-            }
-
-            await new Promise(resolve => setTimeout(resolve, 800));
-            const bonusTriggered = checkBonus(finalReels);
-            let win = checkWin(finalReels);
-
-            if (bonusTriggered) {
-                freeSpins += 10;
-                result.textContent = 'BONUS! +10 SPINS';
-                result.style.color = '#00ff00';
-            } else if (win) {
-                let payout = calculatePayout(win);
-                if (freeSpins > 0) {
-                    multiplier = Math.random() < 0.25 ? (Math.random() < 0.5 ? 2 : 3) : 1;
-                    payout *= multiplier;
-                }
-                score += payout;
-                jackpot += Math.floor(payout * 0.1);
-                result.textContent = `${win.message}! +${payout}${multiplier > 1 ? ` (x${multiplier})` : ''}`;
-                result.style.color = '#ffd700';
-                if (score >= 5000) {
-                    result.textContent += ' | JACKPOT! +2500';
-                    score += 2500;
-                    jackpot = 0;
-                }
-            } else {
-                result.textContent = 'NO WIN';
-                result.style.color = '#f0f0f0';
-            }
-
-            if (freeSpins > 0) {
-                freeSpins--;
-                if (freeSpins === 0) multiplier = 1;
-                result.textContent += ` | SPINS: ${freeSpins}`;
-            }
-
-            scoreDisplay.textContent = `Score: ${score} | Jackpot: ${jackpot}${freeSpins > 0 ? ` | Spins: ${freeSpins}` : ''}`;
-            isSpinning = false;
-
-            if (freeSpins > 0 && !autoSpinInterval) {
-                await new Promise(resolve => setTimeout(resolve, 1200));
-                spinSlots();
-            }
-        }
-
-        function autoSpin() {
-            const btn = document.getElementById('auto-spin-btn');
-            if (autoSpinInterval) {
-                clearInterval(autoSpinInterval);
-                autoSpinInterval = null;
-                btn.textContent = 'AUTO';
-            } else {
-                autoSpinInterval = setInterval(spinSlots, 3000);
-                btn.textContent = 'STOP';
-                spinSlots();
-            }
-        }
-
-        function checkWin(reels) {
-            const grid = [
-                [reels[0], reels[1], reels[2]],
-                [reels[3], reels[4], reels[5]],
-                [reels[6], reels[7], reels[8]]
-            ];
-
-            for (let row = 0; row < 3; row++) {
-                if (grid[row][0] === grid[row][1] && grid[row][1] === grid[row][2] && !['🎁', '✨'].includes(grid[row][0])) {
-                    return { message: `3 ${grid[row][0]}`, type: 'row' };
-                }
-            }
-
-            for (let col = 0; col < 3; col++) {
-                if (grid[0][col] === grid[1][col] && grid[1][col] === grid[2][col] && !['🎁', '✨'].includes(grid[0][col])) {
-                    return { message: `3 ${grid[0][col]}`, type: 'column' };
-                }
-            }
-
-            if (grid[0][0] === grid[1][1] && grid[1][1] === grid[2][2] && !['🎁', '✨'].includes(grid[0][0])) {
-                return { message: `3 ${grid[0][0]} DIAG`, type: 'diagonal' };
-            }
-            if (grid[0][2] === grid[1][1] && grid[1][1] === grid[2][0] && !['🎁', '✨'].includes(grid[0][2])) {
-                return { message: `3 ${grid[0][2]} DIAG`, type: 'diagonal' };
-            }
-
-            return null;
-        }
-
-        function checkBonus(reels) {
-            return reels.includes('🎁') || reels.includes('✨');
-        }
-
-        function calculatePayout(win) {
-            switch (win.type) {
-                case 'row': return 500;
-                case 'column': return 400;
-                case 'diagonal': return 600;
-                default: return 0;
-            }
-        }
-    </script>
+    <script src="game.js"></script>
 </body>
 </html>
